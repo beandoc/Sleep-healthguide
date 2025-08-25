@@ -39,6 +39,10 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
             background: var(--bg-gradient-body);
@@ -675,6 +679,26 @@
             background: #f1f5f9;
             border-radius: var(--border-radius-md);
         }
+        
+        /* Scroll to Top Button */
+        #scrollTopBtn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: var(--primary-color);
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 18px;
+            box-shadow: var(--shadow-md);
+        }
 
 
         /* Mobile Responsive */
@@ -739,7 +763,7 @@
             body {
                 background: none;
             }
-            .navigation, .fixed-header, #startBtn, #downloadBtn, #printBtn, #resetBtn {
+            .navigation, .fixed-header, #startBtn, #downloadBtn, #printBtn, #resetBtn, #scrollTopBtn {
                 display: none;
             }
             .page {
@@ -988,6 +1012,8 @@
             </div>
             <button class="nav-button" id="nextBtn" data-translate-key="nextBtn">Next</button>
         </div>
+        
+        <button id="scrollTopBtn" title="Go to top">↑</button>
     </div>
 
     <script>
@@ -1200,36 +1226,6 @@
                 disclaimer: "<strong>अस्वीकरण:</strong> यह उपकरण केवल सूचना के उद्देश्यों के लिए है और चिकित्सा सलाह का गठन नहीं करता है। परिणाम आपकी नींद के पैटर्न को समझने में मदद करने और एक स्वास्थ्य देखभाल पेशेवर के साथ बातचीत को सुविधाजनक बनाने के लिए हैं। यह पेशेवर निदान या उपचार का विकल्प नहीं है। कृपया किसी भी स्वास्थ्य संबंधी चिंता के लिए एक योग्य चिकित्सक या नींद विशेषज्ञ से परामर्श करें।"
             }
         };
-
-        // ================================================
-        // DATA & CONTENT (Continued)
-        // ================================================
-        const habitsData = [
-            { name: 'caffeine', desc: 'Caffeine Timing', detail: 'I avoid caffeine at least 8 hours before bed' },
-            { name: 'screens', desc: 'Screen Time', detail: 'I put away all screens (phone, TV, laptop) at least 60 minutes before bed' },
-            { name: 'consistency', desc: 'Consistency', detail: 'I go to bed and wake up at roughly the same time, even on weekends' },
-            { name: 'environment', desc: 'Environment', detail: 'My bedroom is dark, quiet, and cool' },
-            { name: 'exercise', desc: 'Exercise', detail: 'I get regular physical activity during the day' },
-            { name: 'meals', desc: 'Late Meals', detail: 'I avoid heavy meals or excess fluids within 2-3 hours of bedtime' },
-            { name: 'winddown', desc: 'Wind-Down', detail: 'I have a relaxing pre-sleep routine (e.g., reading, meditation, warm bath)' }
-        ];
-        
-        const epworthData = [
-            'Sitting and reading', 'Watching TV', 'Sitting, inactive, in a public place (e.g., a meeting or theater)',
-            'As a passenger in a car for an hour without a break', 'Lying down to rest in the afternoon when circumstances permit',
-            'Sitting and talking to someone', 'Sitting quietly after a meal without alcohol', 'In a car, while stopped for a few minutes in traffic'
-        ];
-
-        const stopBangData = [
-            { name: 'snoring', question: '<strong>Snoring:</strong> Do you snore loudly (loud enough to be heard through closed doors)?' },
-            { name: 'tired', question: '<strong>Tired:</strong> Do you often feel tired, fatigued, or sleepy during the daytime?' },
-            { name: 'observed', question: '<strong>Observed:</strong> Has anyone observed you stop breathing or choke/gasp during your sleep?' },
-            { name: 'pressure', question: '<strong>Pressure:</strong> Do you have or are you being treated for high blood pressure?' },
-            { name: 'bmi', question: '<strong>BMI:</strong> Is your Body Mass Index (BMI) more than 35 kg/m²?' },
-            { name: 'age', question: '<strong>Age:</strong> Are you older than 50?' },
-            { name: 'neck', question: '<strong>Neck Size:</strong> Is your shirt collar 16 inches / 40cm or larger?' },
-            { name: 'gender', question: '<strong>Gender:</strong> Are you male?' }
-        ];
 
         // ================================================
         // HELPER FUNCTIONS
@@ -1789,13 +1785,13 @@
             downloadBtn.textContent = '📄 Generating...';
 
             const userName = document.getElementById('userName').value || 'Patient';
-            const reportDate = new Date().toLocaleDateString('hi-IN');
+            const reportDate = new Date().toLocaleDateString();
             
             const psqiScore = calculatePSQIScore();
             const epworthScore = state.epworthScores.reduce((s, v) => s + (v || 0), 0);
             const stopBangScore = document.getElementById('stopBangTotal').value;
 
-            // Generate recommendations in Hindi
+            // Generate recommendations in English
             let recommendationsHtml = '';
             const duration = document.getElementById('snapshot-duration').value;
             const regularity = document.getElementById('snapshot-regularity').value;
@@ -1806,55 +1802,55 @@
             if (duration === 'less-than-5' || duration === '5-6') {
                 recommendationsHtml += `
                     <div class="recommendation-block">
-                        <div class="recommendation-title">अपर्याप्त नींद की अवधि (नींद की कमी)</div>
+                        <div class="recommendation-title">Insufficient Sleep Duration (Sleep Deprivation)</div>
                         <div class="recommendation-body">
-                            <p>आपने संकेत दिया है कि आप लगातार नींद के लिए पर्याप्त समय नहीं दे रहे हैं। इससे संचित प्रभाव हो सकते हैं और अगले दिन नींद महसूस हो सकती है।</p>
-                            <p><strong>सिफारिश:</strong> हर रात सोने के लिए सक्रिय रूप से पर्याप्त समय दें। 7-9 घंटे की नींद का लक्ष्य रखें, उदाहरण के लिए, रात 10:00 बजे से सुबह 6:00 बजे तक।</p>
+                            <p>You indicated that you are consistently not allocating enough time for sleep. This can lead to accumulated effects and feeling sleepy the next day.</p>
+                            <p><strong>Recommendation:</strong> Actively give yourself enough time to sleep each night. Aim for a consistent sleep window of 7-9 hours, for example, 10:00 PM to 6:00 AM.</p>
                         </div>
                     </div>`;
             }
             if (regularity === 'inconsistent') {
                  recommendationsHtml += `
                     <div class="recommendation-block">
-                        <div class="recommendation-title">अनियमित नींद का शेड्यूल</div>
+                        <div class="recommendation-title">Irregular Sleep Schedule</div>
                         <div class="recommendation-body">
-                            <p>सप्ताहांत और कार्यदिवसों के बीच आपके सोने के समय में भिन्नता आपके शरीर की आंतरिक घड़ी को बाधित कर सकती है और नींद की कमी का कारण बन सकती है। नियमितता महत्वपूर्ण है।</p>
-                            <p><strong>सिफारिश:</strong> नींद की नियमितता बढ़ाने के लिए सप्ताहांत सहित हर दिन एक ही समय पर सोने और जागने का प्रयास करें।</p>
+                            <p>Varying your sleep times between weekdays and weekends can disrupt your body's internal clock and result in sleep deprivation. Regularity is crucial.</p>
+                            <p><strong>Recommendation:</strong> Strive to go to bed and wake up at the same time every single day, including weekends, to enhance sleep regularity.</p>
                         </div>
                     </div>`;
             }
              if (latency > 30) {
                  recommendationsHtml += `
                     <div class="recommendation-block">
-                        <div class="recommendation-title">सोने में कठिनाई (प्रारंभिक अनिद्रा)</div>
+                        <div class="recommendation-title">Difficulty Falling Asleep (Initial Insomnia)</div>
                         <div class="recommendation-body">
-                            <p>यदि आप बिस्तर पर सोने की कोशिश करते हैं लेकिन सोने से पहले 30 मिनट से अधिक समय तक करवटें बदलते रहते हैं, तो यह एक समस्या का संकेत है।</p>
-                            <p><strong>सिफारिश:</strong> यदि आपको लगातार सोने में 30 मिनट से अधिक समय लग रहा है, तो इसे एक ऐसी समस्या के रूप में पहचानें जिसे बेहतर नींद स्वच्छता या डॉक्टर से परामर्श के माध्यम से संबोधित करने की आवश्यकता है।</p>
+                            <p>If you lie in bed trying to sleep but find yourself tossing and turning for more than 30 minutes before falling asleep, this indicates a problem.</p>
+                            <p><strong>Recommendation:</strong> If you are consistently taking more than 30 minutes to fall asleep, recognize this as a problem that needs to be addressed through better sleep hygiene or consultation with a doctor.</p>
                         </div>
                     </div>`;
             }
             if (q5b > 1) {
                  recommendationsHtml += `
                     <div class="recommendation-block">
-                        <div class="recommendation-title">रात में बार-बार जागना</div>
+                        <div class="recommendation-title">Frequent Night Awakenings</div>
                         <div class="recommendation-body">
-                            <p>रात के दौरान बार-बार जागना, जिससे आपके जागने का कुल समय लगभग 30 मिनट या उससे अधिक हो जाता है, खराब नींद का एक और संकेत है।</p>
-                            <p><strong>सिफारिश:</strong> यदि बार-बार जागना आपकी नींद को बाधित करता है, तो अधिक समेकित नींद प्राप्त करने के लिए रणनीतियों पर ध्यान केंद्रित करें, जैसे कि यह सुनिश्चित करना कि आपका शयनकक्ष अंधेरा और शांत हो।</p>
+                            <p>Waking up repeatedly during the night, such that the total time you are awake adds up to approximately 30 minutes or more, is another sign of poor sleep.</p>
+                            <p><strong>Recommendation:</strong> If frequent awakenings disrupt your sleep, focus on strategies to achieve more consolidated sleep, such as ensuring your bedroom is dark and quiet.</p>
                         </div>
                     </div>`;
             }
             if (feeling === 'groggy') {
                  recommendationsHtml += `
                     <div class="recommendation-block">
-                        <div class="recommendation-title">सुबह ताजगी या सतर्कता की कमी</div>
+                        <div class="recommendation-title">Lack of Morning Freshness or Alertness</div>
                         <div class="recommendation-body">
-                            <p>सुबह उठने पर ताजा या सतर्क महसूस न करना यह बताता है कि आपकी नींद की गुणवत्ता अच्छी नहीं थी।</p>
-                            <p><strong>सिफारिश:</strong> यदि आप ताजा महसूस नहीं करते हैं, तो संभावित मुद्दों जैसे खर्राटे, बेचैन हरकतें, या गहरी, पुनर्स्थापनात्मक नींद की कमी की जांच करें।</p>
+                            <p>Waking up in the morning and not feeling fresh or alert suggests that the quality of your sleep was not good.</p>
+                            <p><strong>Recommendation:</strong> If you wake up not feeling fresh, investigate potential issues such as snoring, restless movements, or the lack of deep, restorative sleep.</p>
                         </div>
                     </div>`;
             }
             if (recommendationsHtml === '') {
-                recommendationsHtml = `<p>आपके उत्तरों के आधार पर, कोई विशिष्ट समस्या की पहचान नहीं हुई है। अच्छी नींद की आदतें बनाए रखना जारी रखें।</p>`;
+                recommendationsHtml = `<p>Based on your answers, no specific issues were identified. Continue to maintain good sleep habits.</p>`;
             }
 
             const reportHtml = `
@@ -1866,11 +1862,11 @@
                             .header { text-align: center; border-bottom: 2px solid #0ea5e9; padding-bottom: 15px; margin-bottom: 20px; }
                             .header h1 { color: #0ea5e9; margin: 0; font-size: 24px; }
                             .header p { margin: 5px 0 0; font-size: 16px; }
-                            .section { margin-bottom: 20px; }
+                            .section { margin-bottom: 20px; page-break-inside: avoid; }
                             .section h2 { font-size: 20px; color: #0ea5e9; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 10px;}
                             .score-display { display: flex; align-items: center; gap: 15px; margin: 15px 0; font-size: 16px; }
                             .score-box { background: #0ea5e9; color: white; border-radius: 8px; padding: 10px 15px; font-size: 20px; font-weight: bold; min-width: 50px; text-align: center;}
-                            .recommendation-block { border: 1px solid #ddd; border-radius: 8px; margin: 15px 0; }
+                            .recommendation-block { border: 1px solid #ddd; border-radius: 8px; margin: 15px 0; page-break-inside: avoid; }
                             .recommendation-title { font-size: 16px; font-weight: bold; padding: 10px; background: #f3e8ff; color: #8b5cf6; border-bottom: 1px solid #ddd; }
                             .recommendation-body { padding: 10px; }
                             .disclaimer { font-size: 10px; color: #666; text-align: center; margin-top: 30px; padding-top: 10px; border-top: 1px solid #ccc; }
@@ -1878,26 +1874,26 @@
                     </head>
                     <body>
                         <div class="header">
-                            <h1>मेरी संपूर्ण नींद स्वास्थ्य गाइड</h1>
-                            <p>अपनी नींद को ट्रैक करें, समझें और सुधारें</p>
-                            <p><b>रोगी का नाम:</b> ${userName}</p>
-                            <p><b>रिपोर्ट की तारीख:</b> ${reportDate}</p>
+                            <h1>My Complete Sleep Health Guide</h1>
+                            <p>Track, Understand, and Improve Your Sleep</p>
+                            <p><b>Patient Name:</b> ${userName}</p>
+                            <p><b>Report Date:</b> ${reportDate}</p>
                         </div>
 
                         <div class="section">
-                            <h2>आपके परिणाम और मुख्य निष्कर्ष</h2>
-                            <div class="score-display"><span>PSQI स्कोर:</span><div class="score-box">${psqiScore}</div><span>(स्कोर > 5 खराब नींद की गुणवत्ता का सुझाव देता है)</span></div>
-                            <div class="score-display"><span>एपवर्थ स्कोर:</span><div class="score-box">${epworthScore}</div><span>(स्कोर ≥ 10 अत्यधिक नींद का सुझाव देता है)</span></div>
-                            <div class="score-display"><span>स्टॉप-बैंग स्कोर:</span><div class="score-box">${stopBangScore}</div><span>(स्कोर ≥ 3 OSA के बढ़ते जोखिम का सुझाव देता है)</span></div>
+                            <h2>Your Results & Key Findings</h2>
+                            <div class="score-display"><span>PSQI Score:</span><div class="score-box">${psqiScore}</div><span>(Score > 5 suggests poor sleep quality)</span></div>
+                            <div class="score-display"><span>Epworth Score:</span><div class="score-box">${epworthScore}</div><span>(Score ≥ 10 suggests excessive sleepiness)</span></div>
+                            <div class="score-display"><span>STOP-Bang Score:</span><div class="score-box">${stopBangScore}</div><span>(Score ≥ 3 suggests increased OSA risk)</span></div>
                         </div>
 
                         <div class="section">
-                            <h2>सिफारिशें</h2>
+                            <h2>Recommendations</h2>
                             ${recommendationsHtml}
                         </div>
                         
                         <div class="disclaimer">
-                            <strong>अस्वीकरण:</strong> यह उपकरण केवल सूचना के उद्देश्यों के लिए है और चिकित्सा सलाह का गठन नहीं करता है। परिणाम आपकी नींद के पैटर्न को समझने में मदद करने और एक स्वास्थ्य देखभाल पेशेवर के साथ बातचीत को सुविधाजनक बनाने के लिए हैं। यह पेशेवर निदान या उपचार का विकल्प नहीं है। कृपया किसी भी स्वास्थ्य संबंधी चिंता के लिए एक योग्य चिकित्सक या नींद विशेषज्ञ से परामर्श करें।
+                            <strong>Disclaimer:</strong> This tool is for informational purposes only and does not constitute medical advice. The results are intended to help you understand your sleep patterns and facilitate a conversation with a healthcare professional. It is not a substitute for professional diagnosis or treatment. Please consult a qualified doctor or sleep specialist for any health concerns.
                         </div>
                     </body>
                 </html>
