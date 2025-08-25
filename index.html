@@ -680,34 +680,33 @@
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .container {
-                margin: 10px;
-                border-radius: var(--border-radius-md);
+                margin: 0;
+                border-radius: 0;
+                box-shadow: none;
             }
             .page {
                 padding: 20px;
-                min-height: auto;
+                min-height: 100vh;
             }
             .cover-title {
-                font-size: 2.5rem;
+                font-size: 2.8rem;
             }
-            .form-row {
-                flex-direction: column;
-                gap: 15px;
+            .cover-subtitle {
+                font-size: 1.3rem;
+                margin-bottom: 30px;
             }
-            .checkbox-grid {
-                grid-template-columns: 1fr;
+            .cover-fields {
+                padding: 30px;
             }
-            .data-table, .sleep-diary {
-                font-size: 12px;
-            }
-            .data-table th, .data-table td {
-                padding: 10px 8px;
+             h1 {
+                font-size: 2rem;
             }
             .fixed-header {
                 position: relative;
                 width: 100%;
                 padding: 10px;
                 margin-bottom: 20px;
+                align-items: center;
             }
             .overall-progress {
                 width: 100%;
@@ -719,6 +718,18 @@
             .score-button {
                 width: 40px;
                 height: 40px;
+                font-size: 14px;
+            }
+            .score-display {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            .score-display span {
+                font-size: 14px;
+            }
+            .nav-button {
+                padding: 12px 20px;
                 font-size: 14px;
             }
         }
@@ -1056,12 +1067,30 @@
                 epworthHeader2: "Score (0-3)",
                 epworthTotal: "Total Epworth Score:",
                 epworthConcern: "A score of 10 or greater raises concern.",
+                epworthQ1: "Sitting and reading",
+                epworthQ2: "Watching TV",
+                epworthQ3: "Sitting, inactive, in a public place (e.g., a meeting or theater)",
+                epworthQ4: "As a passenger in a car for an hour without a break",
+                epworthQ5: "Lying down to rest in the afternoon when circumstances permit",
+                epworthQ6: "Sitting and talking to someone",
+                epworthQ7: "Sitting quietly after a meal without alcohol",
+                epworthQ8: "In a car, while stopped for a few minutes in traffic",
                 stopBangTitle: "Part 4 - Sleep Apnea Risk",
                 stopBangSubtitle: "STOP-Bang Questionnaire",
                 stopBangHeader1: "Question",
                 stopBangHeader2: "Answer",
                 stopBangTotal: "Total 'Yes' Answers:",
                 stopBangRisk: "0-2: Low Risk | 3-4: Intermediate Risk | 5-8: High Risk",
+                stopBangQ1: "<strong>Snoring:</strong> Do you snore loudly (loud enough to be heard through closed doors)?",
+                stopBangQ2: "<strong>Tired:</strong> Do you often feel tired, fatigued, or sleepy during the daytime?",
+                stopBangQ3: "<strong>Observed:</strong> Has anyone observed you stop breathing or choke/gasp during your sleep?",
+                stopBangQ4: "<strong>Pressure:</strong> Do you have or are you being treated for high blood pressure?",
+                stopBangQ5: "<strong>BMI:</strong> Is your Body Mass Index (BMI) more than 35 kg/m²?",
+                stopBangQ6: "<strong>Age:</strong> Are you older than 50?",
+                stopBangQ7: "<strong>Neck Size:</strong> Is your shirt collar 16 inches / 40cm or larger?",
+                stopBangQ8: "<strong>Gender:</strong> Are you male?",
+                yes: "Yes",
+                no: "No",
                 recoTitle: "Understanding Your Sleep & Recommendations",
                 recoSubtitle: "Personalized advice based on your answers",
                 resultsTitle: "Your Results & Key Findings",
@@ -1131,12 +1160,30 @@
                 epworthHeader2: "स्कोर (0-3)",
                 epworthTotal: "कुल एपवर्थ स्कोर:",
                 epworthConcern: "10 या उससे अधिक का स्कोर चिंता का विषय है।",
+                epworthQ1: "बैठकर पढ़ना",
+                epworthQ2: "टीवी देखना",
+                epworthQ3: "सार्वजनिक स्थान पर निष्क्रिय बैठे रहना (जैसे, मीटिंग या थिएटर)",
+                epworthQ4: "एक घंटे तक बिना रुके कार में यात्री के रूप में",
+                epworthQ5: "दोपहर में जब परिस्थितियाँ अनुमति दें तो आराम करने के लिए लेटना",
+                epworthQ6: "किसी से बैठकर बात करना",
+                epworthQ7: "शराब के बिना भोजन के बाद चुपचाप बैठना",
+                epworthQ8: "ट्रैफिक में कुछ मिनट के लिए रुकी हुई कार में",
                 stopBangTitle: "भाग 4 - स्लीप एपनिया का खतरा",
                 stopBangSubtitle: "स्टॉप-बैंग प्रश्नावली",
                 stopBangHeader1: "प्रश्न",
                 stopBangHeader2: "उत्तर",
                 stopBangTotal: "कुल 'हाँ' उत्तर:",
                 stopBangRisk: "0-2: कम जोखिम | 3-4: मध्यवर्ती जोखिम | 5-8: उच्च जोखिम",
+                stopBangQ1: "<strong>खर्राटे:</strong> क्या आप जोर से खर्राटे लेते हैं (इतनी जोर से कि बंद दरवाजों से भी सुना जा सके)?",
+                stopBangQ2: "<strong>थकान:</strong> क्या आप अक्सर दिन में थका हुआ, या नींद में महसूस करते हैं?",
+                stopBangQ3: "<strong>अवलोकन:</strong> क्या किसी ने आपको नींद के दौरान सांस रोकते या हांफते हुए देखा है?",
+                stopBangQ4: "<strong>रक्तचाप:</strong> क्या आपको उच्च रक्तचाप है या उसका इलाज चल रहा है?",
+                stopBangQ5: "<strong>बीएमआई:</strong> क्या आपका बॉडी मास इंडेक्स (बीएमआई) 35 किग्रा/मी² से अधिक है?",
+                stopBangQ6: "<strong>आयु:</strong> क्या आपकी आयु 50 वर्ष से अधिक है?",
+                stopBangQ7: "<strong>गर्दन का आकार:</strong> क्या आपके शर्ट का कॉलर 16 इंच / 40 सेमी या उससे बड़ा है?",
+                stopBangQ8: "<strong>लिंग:</strong> क्या आप पुरुष हैं?",
+                yes: "हाँ",
+                no: "नहीं",
                 recoTitle: "अपनी नींद को समझना और सिफारिशें",
                 recoSubtitle: "आपके उत्तरों पर आधारित व्यक्तिगत सलाह",
                 resultsTitle: "आपके परिणाम और मुख्य निष्कर्ष",
@@ -1153,36 +1200,6 @@
                 disclaimer: "<strong>अस्वीकरण:</strong> यह उपकरण केवल सूचना के उद्देश्यों के लिए है और चिकित्सा सलाह का गठन नहीं करता है। परिणाम आपकी नींद के पैटर्न को समझने में मदद करने और एक स्वास्थ्य देखभाल पेशेवर के साथ बातचीत को सुविधाजनक बनाने के लिए हैं। यह पेशेवर निदान या उपचार का विकल्प नहीं है। कृपया किसी भी स्वास्थ्य संबंधी चिंता के लिए एक योग्य चिकित्सक या नींद विशेषज्ञ से परामर्श करें।"
             }
         };
-
-        // ================================================
-        // DATA & CONTENT (Continued)
-        // ================================================
-        const habitsData = [
-            { name: 'caffeine', desc: 'Caffeine Timing', detail: 'I avoid caffeine at least 8 hours before bed' },
-            { name: 'screens', desc: 'Screen Time', detail: 'I put away all screens (phone, TV, laptop) at least 60 minutes before bed' },
-            { name: 'consistency', desc: 'Consistency', detail: 'I go to bed and wake up at roughly the same time, even on weekends' },
-            { name: 'environment', desc: 'Environment', detail: 'My bedroom is dark, quiet, and cool' },
-            { name: 'exercise', desc: 'Exercise', detail: 'I get regular physical activity during the day' },
-            { name: 'meals', desc: 'Late Meals', detail: 'I avoid heavy meals or excess fluids within 2-3 hours of bedtime' },
-            { name: 'winddown', desc: 'Wind-Down', detail: 'I have a relaxing pre-sleep routine (e.g., reading, meditation, warm bath)' }
-        ];
-        
-        const epworthData = [
-            'Sitting and reading', 'Watching TV', 'Sitting, inactive, in a public place (e.g., a meeting or theater)',
-            'As a passenger in a car for an hour without a break', 'Lying down to rest in the afternoon when circumstances permit',
-            'Sitting and talking to someone', 'Sitting quietly after a meal without alcohol', 'In a car, while stopped for a few minutes in traffic'
-        ];
-
-        const stopBangData = [
-            { name: 'snoring', question: '<strong>Snoring:</strong> Do you snore loudly (loud enough to be heard through closed doors)?' },
-            { name: 'tired', question: '<strong>Tired:</strong> Do you often feel tired, fatigued, or sleepy during the daytime?' },
-            { name: 'observed', question: '<strong>Observed:</strong> Has anyone observed you stop breathing or choke/gasp during your sleep?' },
-            { name: 'pressure', question: '<strong>Pressure:</strong> Do you have or are you being treated for high blood pressure?' },
-            { name: 'bmi', question: '<strong>BMI:</strong> Is your Body Mass Index (BMI) more than 35 kg/m²?' },
-            { name: 'age', question: '<strong>Age:</strong> Are you older than 50?' },
-            { name: 'neck', question: '<strong>Neck Size:</strong> Is your shirt collar 16 inches / 40cm or larger?' },
-            { name: 'gender', question: '<strong>Gender:</strong> Are you male?' }
-        ];
 
         // ================================================
         // HELPER FUNCTIONS
