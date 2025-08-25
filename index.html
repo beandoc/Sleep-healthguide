@@ -1,0 +1,1909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Complete Sleep Health Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- PDF Generation Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" xintegrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        /* * ================================================
+         * CSS Custom Properties (Variables) for easy theme management
+         * ================================================
+        */
+        :root {
+            --primary-color: #0ea5e9;
+            --secondary-color: #06b6d4;
+            --accent-color-green: #10b981;
+            --accent-color-green-dark: #059669;
+            --accent-color-purple: #8b5cf6;
+            --accent-color-yellow: #fbbf24;
+            --accent-color-red: #ef4444;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-gradient-body: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f0fdf4 100%);
+            --bg-gradient-header: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            --bg-gradient-progress: linear-gradient(135deg, var(--accent-color-green), var(--accent-color-green-dark));
+            --border-color: #e5e7eb;
+            --border-radius-md: 12px;
+            --border-radius-lg: 16px;
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-gradient-body);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 210mm;
+            margin: 20px auto;
+            background: white;
+            box-shadow: var(--shadow-lg);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+        }
+
+        .page {
+            min-height: 297mm;
+            padding: 40px;
+            display: none;
+            position: relative;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .page-number {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: var(--bg-gradient-header);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Progress & Language Header */
+        .fixed-header {
+            position: fixed;
+            top: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
+        .language-selector {
+            background: white;
+            padding: 5px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            gap: 5px;
+        }
+
+        .lang-btn {
+            border: none;
+            background: transparent;
+            padding: 5px 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .overall-progress {
+            background: white;
+            border-radius: 20px;
+            padding: 4px;
+            width: 200px;
+            box-shadow: var(--shadow-md);
+            border: 2px solid #e0f2fe;
+        }
+
+        .progress-fill {
+            height: 20px;
+            background: var(--bg-gradient-progress);
+            border-radius: var(--border-radius-lg);
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            min-width: 60px;
+        }
+
+        .save-indicator {
+            background: var(--accent-color-green);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            text-align: center;
+        }
+
+        .save-indicator.show {
+            opacity: 1;
+        }
+
+        /* Cover Page Styles */
+        .cover-page {
+            background: var(--bg-gradient-body);
+            color: var(--text-dark);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cover-page::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.05) 0%, transparent 70%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-20px, -20px) rotate(180deg); }
+        }
+
+        .cover-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .cover-title {
+            font-size: 3.8rem;
+            font-weight: 800;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), var(--accent-color-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+        }
+
+        .cover-subtitle {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 50px;
+            color: var(--text-light);
+            line-height: 1.4;
+        }
+
+        .sleep-icon {
+            width: 140px;
+            height: 140px;
+            margin: 30px 0 40px 0;
+            fill: var(--primary-color);
+            filter: drop-shadow(0 10px 30px rgba(14, 165, 233, 0.2));
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .cover-fields {
+            background: white;
+            padding: 50px;
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            border: 2px solid #e0f2fe;
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
+        }
+
+        .cover-field {
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .cover-field:last-child {
+            margin-bottom: 0;
+        }
+
+        .cover-field label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+            color: #374151;
+        }
+
+        .cover-field input, .cover-field select {
+            width: 100%;
+            padding: 18px 24px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            font-size: 18px;
+            background: #f9fafb;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .cover-field input:focus, .cover-field select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Page Headers */
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #e0f2fe;
+        }
+
+        h1, h2, h3 {
+            margin-bottom: 15px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            font-weight: 400;
+            margin-bottom: 30px;
+        }
+
+        .instructions {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            padding: 25px;
+            border-radius: var(--border-radius-lg);
+            margin: 25px 0;
+            border-left: 4px solid var(--primary-color);
+            font-size: 1.1rem;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .form-field {
+            flex: 1;
+        }
+
+        label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #374151;
+        }
+
+        input[type="text"], input[type="date"], input[type="number"], input[type="time"], textarea, select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            font-size: 16px;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        /* Tables (Habits, Questions, Diary) */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .data-table th {
+            background: var(--bg-gradient-header);
+            color: white;
+            padding: 20px 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .data-table td {
+            padding: 20px 15px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .data-table tr:hover {
+            background: var(--bg-light);
+        }
+
+        .habit-description {
+            font-weight: 500;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+
+        .habit-detail {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .frequency-options {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .frequency-option {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .frequency-option input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-color);
+        }
+
+        /* Action Plan Modules */
+        .action-modules {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .action-module {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            padding: 30px;
+            border-radius: 20px;
+            border-left: 6px solid var(--primary-color);
+        }
+
+        .module-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .module-icon {
+            width: 30px;
+            height: 30px;
+            fill: currentColor;
+        }
+
+        .score-display {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .score-box {
+            background: white;
+            border: 2px solid var(--primary-color);
+            border-radius: var(--border-radius-md);
+            padding: 15px 20px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .action-items {
+            list-style: none;
+            padding: 0;
+        }
+
+        .action-items li {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: var(--border-radius-md);
+            border-left: 4px solid var(--accent-color-green);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+        }
+
+        .action-items li::before {
+            content: "✓";
+            color: var(--accent-color-green);
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-right: 15px;
+        }
+        
+        /* Recommendation Styles */
+        .recommendation-block {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            margin: 25px 0;
+            border-left: 6px solid var(--accent-color-purple);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+        .recommendation-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            padding: 20px;
+            background: #f3e8ff;
+            color: var(--accent-color-purple);
+        }
+        .recommendation-body {
+            padding: 20px;
+        }
+        .recommendation-body p {
+            margin-bottom: 10px;
+        }
+        .recommendation-body ul {
+            list-style-position: inside;
+            padding-left: 10px;
+        }
+
+
+        /* Navigation */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #f1f5f9;
+        }
+
+        .nav-button {
+            background: var(--bg-gradient-header);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: var(--border-radius-md);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(14, 165, 233, 0.3);
+        }
+
+        .nav-button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .page-indicator {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #d1d5db;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: var(--primary-color);
+            transform: scale(1.2);
+        }
+
+        /* Clinical Screener Styles */
+        .score-input {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .score-button {
+            width: 45px;
+            height: 45px;
+            border: 2px solid var(--border-color);
+            background: white;
+            border-radius: var(--border-radius-md);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .score-button:hover {
+            border-color: var(--primary-color);
+            background: #e0f2fe;
+            transform: scale(1.05);
+        }
+
+        .score-button.selected {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .total-score {
+            background: var(--bg-gradient-header);
+            color: white;
+            padding: 25px;
+            border-radius: var(--border-radius-lg);
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .total-score input {
+            background: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: var(--border-radius-md);
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            width: 100px;
+            margin: 0 10px;
+            color: var(--primary-color);
+        }
+
+        /* PSQI Specific Styles */
+        .psqi-question {
+            background: var(--bg-light);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: var(--border-radius-md);
+            border-left: 4px solid var(--accent-color-purple);
+        }
+
+        .psqi-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .psqi-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .psqi-option:hover {
+            background: #e0f2fe;
+        }
+
+        .psqi-option input[type="radio"] {
+            accent-color: var(--accent-color-purple);
+        }
+
+        /* Disclaimer */
+        .disclaimer {
+            font-size: 12px;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
+            background: #f1f5f9;
+            border-radius: var(--border-radius-md);
+        }
+
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: var(--border-radius-md);
+            }
+            .page {
+                padding: 20px;
+                min-height: auto;
+            }
+            .cover-title {
+                font-size: 2.5rem;
+            }
+            .form-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .checkbox-grid {
+                grid-template-columns: 1fr;
+            }
+            .data-table, .sleep-diary {
+                font-size: 12px;
+            }
+            .data-table th, .data-table td {
+                padding: 10px 8px;
+            }
+            .fixed-header {
+                position: relative;
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 20px;
+            }
+            .overall-progress {
+                width: 100%;
+            }
+            .score-input {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .score-button {
+                width: 40px;
+                height: 40px;
+                font-size: 14px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: none;
+            }
+            .navigation, .fixed-header, #startBtn, #downloadBtn, #printBtn, #resetBtn {
+                display: none;
+            }
+            .page {
+                display: block !important; /* Show all pages for printing */
+                min-height: auto;
+                page-break-after: always;
+                box-shadow: none;
+                border-bottom: 1px solid #ccc;
+            }
+            .page:last-child {
+                page-break-after: avoid;
+                border-bottom: none;
+            }
+            .container {
+                box-shadow: none;
+                border-radius: 0;
+                margin: 0;
+                max-width: 100%;
+            }
+            .cover-page {
+                min-height: 297mm; /* Ensure cover page takes a full page */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Progress Header -->
+    <div class="fixed-header" id="fixedHeader">
+         <div class="language-selector">
+            <button class="lang-btn active" data-lang="en">English</button>
+            <button class="lang-btn" data-lang="hi">हिन्दी</button>
+        </div>
+        <div class="overall-progress">
+            <div class="progress-fill" id="progressFill">0% Complete</div>
+        </div>
+        <div class="save-indicator" id="saveIndicator">✓ Auto-saved</div>
+    </div>
+
+    <div class="container">
+        <!-- Page 1: Cover Page -->
+        <div class="page cover-page active" id="page1">
+            <div class="cover-content">
+                <svg class="sleep-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z"/>
+                </svg>
+                
+                <h1 class="cover-title" data-translate-key="coverTitle">My Complete Sleep Health Guide</h1>
+                <p class="cover-subtitle" data-translate-key="coverSubtitle">Track, Understand, and Improve Your Sleep</p>
+                
+                <div class="cover-fields">
+                    <div class="cover-field">
+                        <label for="userName" data-translate-key="nameLabel">Name:</label>
+                        <input type="text" id="userName" data-translate-key="namePlaceholder" placeholder="Enter your full name">
+                    </div>
+                    <div class="cover-field">
+                        <label for="dateField" data-translate-key="dateLabel">Date:</label>
+                        <input type="date" id="dateField">
+                    </div>
+                </div>
+                <button class="nav-button" id="startBtn" style="margin-top: 40px; width: 100%; max-width: 600px; padding: 20px; font-size: 1.2rem;" data-translate-key="startBtn">Start Guide →</button>
+            </div>
+        </div>
+
+        <!-- Page 2: Sleep Snapshot -->
+        <div class="page" id="page2">
+            <!-- Page number will be added by JS -->
+            <div class="page-header">
+                <h1 data-translate-key="snapshotTitle">Your Sleep Snapshot</h1>
+                <p class="subtitle" data-translate-key="snapshotSubtitle">Let's gather some initial information to tailor your recommendations.</p>
+            </div>
+
+            <div class="form-group">
+                <label for="snapshot-duration"><h3 data-translate-key="snapshotQ1">On a typical night, how many hours of sleep do you get?</h3></label>
+                <select id="snapshot-duration">
+                    <option value="" data-translate-key="selectOption">Select an option</option>
+                    <option value="less-than-5" data-translate-key="snapshotQ1Opt1">Less than 5 hours</option>
+                    <option value="5-6" data-translate-key="snapshotQ1Opt2">5 to 6 hours</option>
+                    <option value="6-7" data-translate-key="snapshotQ1Opt3">6 to 7 hours</option>
+                    <option value="7-9" data-translate-key="snapshotQ1Opt4">7 to 9 hours</option>
+                    <option value="more-than-9" data-translate-key="snapshotQ1Opt5">More than 9 hours</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="snapshot-regularity"><h3 data-translate-key="snapshotQ2">How consistent is your sleep schedule between weekdays and weekends?</h3></label>
+                 <select id="snapshot-regularity">
+                    <option value="" data-translate-key="selectOption">Select an option</option>
+                    <option value="consistent" data-translate-key="snapshotQ2Opt1">Very consistent (less than 1 hour difference)</option>
+                    <option value="somewhat-consistent" data-translate-key="snapshotQ2Opt2">Somewhat consistent (1-2 hours difference)</option>
+                    <option value="inconsistent" data-translate-key="snapshotQ2Opt3">Not consistent (more than 2 hours difference)</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="snapshot-feeling"><h3 data-translate-key="snapshotQ3">How do you typically feel when you wake up in the morning?</h3></label>
+                 <select id="snapshot-feeling">
+                    <option value="" data-translate-key="selectOption">Select an option</option>
+                    <option value="refreshed" data-translate-key="snapshotQ3Opt1">Refreshed and alert</option>
+                    <option value="okay" data-translate-key="snapshotQ3Opt2">Okay, but could be better</option>
+                    <option value="groggy" data-translate-key="snapshotQ3Opt3">Groggy and tired</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Page 3: Sleep Habits & Hygiene Checklist -->
+        <div class="page" id="page3">
+            <!-- Page number will be added by JS -->
+            <div class="page-header">
+                <h1 data-translate-key="habitsTitle">Your Evening & Daily Routines</h1>
+                <p class="subtitle" data-translate-key="habitsSubtitle">Part 1 - Sleep Habits & Hygiene Checklist</p>
+            </div>
+            <table class="data-table" id="habitsTable">
+                <thead>
+                    <tr>
+                        <th data-translate-key="habitsHeader1" style="width: 50%;">Habit</th>
+                        <th data-translate-key="habitsHeader2" style="width: 16.67%;">Often</th>
+                        <th data-translate-key="habitsHeader3" style="width: 16.67%;">Sometimes</th>
+                        <th data-translate-key="habitsHeader4" style="width: 16.67%;">Rarely</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Habit rows will be generated by JS -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Page 4: Pittsburgh Sleep Quality Index (PSQI) -->
+        <div class="page" id="page4">
+            <!-- Page number will be added by JS -->
+            <div class="page-header">
+                <h1 data-translate-key="psqiTitle">Part 2 - Sleep Quality Assessment</h1>
+                <p class="subtitle" data-translate-key="psqiSubtitle">Pittsburgh Sleep Quality Index (PSQI)</p>
+            </div>
+            <div class="instructions" data-translate-key="psqiInstructions">
+                The following questions relate to your usual sleep habits during the past month only. Your answers should indicate the most accurate reply for the majority of days and nights in the past month.
+            </div>
+            <div id="psqiContainer">
+                <!-- PSQI questions will be generated by JS -->
+            </div>
+        </div>
+
+        <!-- Page 5: Epworth Sleepiness Scale -->
+        <div class="page" id="page5">
+            <!-- Page number will be added by JS -->
+            <div class="page-header">
+                <h1 data-translate-key="epworthTitle">Part 3 - Daytime Sleepiness</h1>
+                <p class="subtitle" data-translate-key="epworthSubtitle">Epworth Sleepiness Scale</p>
+            </div>
+            <div class="instructions" data-translate-key="epworthInstructions">
+                How likely are you to nod off or fall asleep in the following situations?
+                <br><br>
+                <strong data-translate-key="epworthScale">0</strong> = Would never nod off | <strong>1</strong> = Slight chance | <strong>2</strong> = Moderate chance | <strong>3</strong> = High chance
+            </div>
+            <table class="data-table" id="epworthTable">
+                <thead>
+                    <tr>
+                        <th data-translate-key="epworthHeader1">Situation</th>
+                        <th data-translate-key="epworthHeader2" style="width: 220px; text-align: center;">Score (0-3)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Epworth questions will be generated by JS -->
+                </tbody>
+            </table>
+            <div class="total-score">
+                <h3><span data-translate-key="epworthTotal">Total Epworth Score:</span> <input type="number" id="epworthTotal" readonly value="0" min="0" max="24"></h3>
+                <p style="margin-top: 15px; font-size: 16px;" data-translate-key="epworthConcern">A score of 10 or greater raises concern.</p>
+            </div>
+        </div>
+
+        <!-- Page 6: STOP-Bang Questionnaire -->
+        <div class="page" id="page6">
+            <!-- Page number will be added by JS -->
+            <div class="page-header">
+                <h1 data-translate-key="stopBangTitle">Part 4 - Sleep Apnea Risk</h1>
+                <p class="subtitle" data-translate-key="stopBangSubtitle">STOP-Bang Questionnaire</p>
+            </div>
+            <table class="data-table" id="stopBangTable">
+                <thead>
+                    <tr>
+                        <th data-translate-key="stopBangHeader1">Question</th>
+                        <th data-translate-key="stopBangHeader2" style="width: 180px; text-align: center;">Answer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- STOP-Bang questions will be generated by JS -->
+                </tbody>
+            </table>
+            <div class="total-score">
+                <h3><span data-translate-key="stopBangTotal">Total 'Yes' Answers:</span> <input type="number" id="stopBangTotal" readonly value="0" min="0" max="8"></h3>
+                <p style="margin-top: 15px; font-size: 16px;" data-translate-key="stopBangRisk">0-2: Low Risk | 3-4: Intermediate Risk | 5-8: High Risk</p>
+            </div>
+        </div>
+
+        <!-- Page 7: Personalized Recommendations -->
+        <div class="page" id="page7">
+             <!-- Page number will be added by JS -->
+            <div class="page-header">
+                <h1 data-translate-key="recoTitle">Understanding Your Sleep & Recommendations</h1>
+                <p class="subtitle" data-translate-key="recoSubtitle">Personalized advice based on your answers</p>
+            </div>
+            <div id="recommendationsContainer">
+                <!-- Recommendations will be generated by JS -->
+            </div>
+        </div>
+
+        <!-- Page 8: Personalized Action Plan -->
+        <div class="page" id="page8">
+            <!-- Page number will be added by JS -->
+            <div class="page-header">
+                <h1 data-translate-key="resultsTitle">Your Results & Key Findings</h1>
+                <p class="subtitle" data-translate-key="resultsSubtitle">A summary of your sleep assessment</p>
+            </div>
+            <div class="action-modules" id="actionPlanContainer">
+                <!-- Action plan modules will be populated by JS -->
+            </div>
+        </div>
+
+        <!-- Page 9: Summary & Download -->
+        <div class="page" id="page9">
+            <!-- Page number will be added by JS -->
+            <div class="page-header">
+                <h1 data-translate-key="summaryTitle">Summary & Next Steps</h1>
+                <p class="subtitle" data-translate-key="summarySubtitle">Your Complete Sleep Health Guide</p>
+            </div>
+            <div class="action-modules" id="summaryContainer">
+                 <!-- Summary modules will be populated by JS -->
+            </div>
+             <div style="background: var(--bg-gradient-header); color: white; padding: 30px; border-radius: 20px; text-align: center; margin: 30px 0;">
+                <h3 style="color: white; margin-bottom: 15px;" data-translate-key="congratsTitle">🎉 Congratulations on Taking Control of Your Sleep Health!</h3>
+                <p style="font-size: 18px; margin-bottom: 20px;" data-translate-key="congratsSubtitle">You've completed a comprehensive assessment of your sleep patterns and habits.</p>
+                <button class="nav-button" id="downloadBtn" style="background: white; color: var(--primary-color); margin-right: 15px;" data-translate-key="downloadBtn">📄 Download Report</button>
+                <button class="nav-button" id="printBtn" style="background: rgba(255,255,255,0.2); border: 2px solid white; margin-right: 15px;" data-translate-key="printBtn">🖨️ Print Guide</button>
+                <button class="nav-button" id="resetBtn" style="background: rgba(255,255,255,0.2); border: 2px solid white;" data-translate-key="resetBtn">🔄 Start Over</button>
+            </div>
+            <div class="disclaimer" data-translate-key="disclaimer">
+                <strong>Disclaimer:</strong> This tool is for informational purposes only and does not constitute medical advice. The results are intended to help you understand your sleep patterns and facilitate a conversation with a healthcare professional. It is not a substitute for professional diagnosis or treatment. Please consult a qualified doctor or sleep specialist for any health concerns.
+            </div>
+        </div>
+
+        <!-- Universal Navigation -->
+        <div class="navigation" id="navigationContainer" style="display:none;">
+            <button class="nav-button" id="prevBtn" data-translate-key="prevBtn">Previous</button>
+            <div class="page-indicator" id="pageIndicator">
+                <!-- Dots will be generated by JS -->
+            </div>
+            <button class="nav-button" id="nextBtn" data-translate-key="nextBtn">Next</button>
+        </div>
+    </div>
+
+    <script>
+    // ================================================
+    // Unobtrusive JavaScript in an IIFE to avoid global scope pollution
+    // ================================================
+    (function() {
+        'use strict';
+
+        // ================================================
+        // STATE MANAGEMENT: Central object for all application data
+        // ================================================
+        const state = {
+            currentPage: 1,
+            totalPages: 9, // UPDATED: Total pages increased to 9
+            currentLanguage: 'en',
+            epworthScores: Array(8).fill(null),
+            formData: {},
+            lastSaveTime: null
+        };
+
+        // ================================================
+        // TRANSLATIONS OBJECT
+        // ================================================
+        const translations = {
+            en: {
+                coverTitle: "My Complete Sleep Health Guide",
+                coverSubtitle: "Track, Understand, and Improve Your Sleep",
+                nameLabel: "Name:",
+                namePlaceholder: "Enter your full name",
+                dateLabel: "Date:",
+                startBtn: "Start Guide →",
+                snapshotTitle: "Your Sleep Snapshot",
+                snapshotSubtitle: "Let's gather some initial information to tailor your recommendations.",
+                snapshotQ1: "On a typical night, how many hours of sleep do you get?",
+                selectOption: "Select an option",
+                snapshotQ1Opt1: "Less than 5 hours",
+                snapshotQ1Opt2: "5 to 6 hours",
+                snapshotQ1Opt3: "6 to 7 hours",
+                snapshotQ1Opt4: "7 to 9 hours",
+                snapshotQ1Opt5: "More than 9 hours",
+                snapshotQ2: "How consistent is your sleep schedule between weekdays and weekends?",
+                snapshotQ2Opt1: "Very consistent (less than 1 hour difference)",
+                snapshotQ2Opt2: "Somewhat consistent (1-2 hours difference)",
+                snapshotQ2Opt3: "Not consistent (more than 2 hours difference)",
+                snapshotQ3: "How do you typically feel when you wake up in the morning?",
+                snapshotQ3Opt1: "Refreshed and alert",
+                snapshotQ3Opt2: "Okay, but could be better",
+                snapshotQ3Opt3: "Groggy and tired",
+                habitsTitle: "Your Evening & Daily Routines",
+                habitsSubtitle: "Part 1 - Sleep Habits & Hygiene Checklist",
+                habitsHeader1: "Habit",
+                habitsHeader2: "Often",
+                habitsHeader3: "Sometimes",
+                habitsHeader4: "Rarely",
+                habitcaffeineDesc: "Caffeine Timing",
+                habitcaffeineDetail: "I avoid caffeine at least 8 hours before bed",
+                habitscreensDesc: "Screen Time",
+                habitscreensDetail: "I put away all screens (phone, TV, laptop) at least 60 minutes before bed",
+                habitconsistencyDesc: "Consistency",
+                habitconsistencyDetail: "I go to bed and wake up at roughly the same time, even on weekends",
+                habitenvironmentDesc: "Environment",
+                habitenvironmentDetail: "My bedroom is dark, quiet, and cool",
+                habitexerciseDesc: "Exercise",
+                habitexerciseDetail: "I get regular physical activity during the day",
+                habitmealsDesc: "Late Meals",
+                habitmealsDetail: "I avoid heavy meals or excess fluids within 2-3 hours of bedtime",
+                habitwinddownDesc: "Wind-Down",
+                habitwinddownDetail: "I have a relaxing pre-sleep routine (e.g., reading, meditation, warm bath)",
+                psqiTitle: "Part 2 - Sleep Quality Assessment",
+                psqiSubtitle: "Pittsburgh Sleep Quality Index (PSQI)",
+                psqiInstructions: "The following questions relate to your usual sleep habits during the past month only. Your answers should indicate the most accurate reply for the majority of days and nights in the past month.",
+                epworthTitle: "Part 3 - Daytime Sleepiness",
+                epworthSubtitle: "Epworth Sleepiness Scale",
+                epworthInstructions: "How likely are you to nod off or fall asleep in the following situations?<br><br><strong>0</strong> = Would never nod off | <strong>1</strong> = Slight chance | <strong>2</strong> = Moderate chance | <strong>3</strong> = High chance",
+                epworthHeader1: "Situation",
+                epworthHeader2: "Score (0-3)",
+                epworthTotal: "Total Epworth Score:",
+                epworthConcern: "A score of 10 or greater raises concern.",
+                stopBangTitle: "Part 4 - Sleep Apnea Risk",
+                stopBangSubtitle: "STOP-Bang Questionnaire",
+                stopBangHeader1: "Question",
+                stopBangHeader2: "Answer",
+                stopBangTotal: "Total 'Yes' Answers:",
+                stopBangRisk: "0-2: Low Risk | 3-4: Intermediate Risk | 5-8: High Risk",
+                recoTitle: "Understanding Your Sleep & Recommendations",
+                recoSubtitle: "Personalized advice based on your answers",
+                resultsTitle: "Your Results & Key Findings",
+                resultsSubtitle: "A summary of your sleep assessment",
+                summaryTitle: "Summary & Next Steps",
+                summarySubtitle: "Your Complete Sleep Health Guide",
+                congratsTitle: "🎉 Congratulations on Taking Control of Your Sleep Health!",
+                congratsSubtitle: "You've completed a comprehensive assessment of your sleep patterns and habits.",
+                downloadBtn: "📄 Download Report",
+                printBtn: "🖨️ Print Guide",
+                resetBtn: "🔄 Start Over",
+                prevBtn: "Previous",
+                nextBtn: "Next",
+                disclaimer: "<strong>Disclaimer:</strong> This tool is for informational purposes only and does not constitute medical advice. The results are intended to help you understand your sleep patterns and facilitate a conversation with a healthcare professional. It is not a substitute for professional diagnosis or treatment. Please consult a qualified doctor or sleep specialist for any health concerns."
+            },
+            hi: {
+                coverTitle: "मेरी संपूर्ण नींद स्वास्थ्य गाइड",
+                coverSubtitle: "अपनी नींद को ट्रैक करें, समझें और सुधारें",
+                nameLabel: "नाम:",
+                namePlaceholder: "अपना पूरा नाम दर्ज करें",
+                dateLabel: "तारीख:",
+                startBtn: "गाइड शुरू करें →",
+                snapshotTitle: "आपकी नींद का स्नैपशॉट",
+                snapshotSubtitle: "आइए आपकी सिफारिशों को तैयार करने के लिए कुछ प्रारंभिक जानकारी एकत्र करें।",
+                snapshotQ1: "एक सामान्य रात में, आप कितने घंटे सोते हैं?",
+                selectOption: "एक विकल्प चुनें",
+                snapshotQ1Opt1: "5 घंटे से कम",
+                snapshotQ1Opt2: "5 से 6 घंटे",
+                snapshotQ1Opt3: "6 से 7 घंटे",
+                snapshotQ1Opt4: "7 से 9 घंटे",
+                snapshotQ1Opt5: "9 घंटे से अधिक",
+                snapshotQ2: "सप्ताहांत और कार्यदिवसों के बीच आपकी नींद का शेड्यूल कितना सुसंगत है?",
+                snapshotQ2Opt1: "बहुत सुसंगत (1 घंटे से कम का अंतर)",
+                snapshotQ2Opt2: "कुछ हद तक सुसंगत (1-2 घंटे का अंतर)",
+                snapshotQ2Opt3: "सुसंगत नहीं (2 घंटे से अधिक का अंतर)",
+                snapshotQ3: "आप सुबह उठने पर आमतौर पर कैसा महसूस करते हैं?",
+                snapshotQ3Opt1: "ताज़ा और सतर्क",
+                snapshotQ3Opt2: "ठीक है, लेकिन बेहतर हो सकता है",
+                snapshotQ3Opt3: "सुस्त और थका हुआ",
+                habitsTitle: "आपकी शाम और दैनिक दिनचर्या",
+                habitsSubtitle: "भाग 1 - नींद की आदतें और स्वच्छता जांच सूची",
+                habitsHeader1: "आदत",
+                habitsHeader2: "अक्सर",
+                habitsHeader3: "कभी-कभी",
+                habitsHeader4: "शायद ही कभी",
+                habitcaffeineDesc: "कैफीन का समय",
+                habitcaffeineDetail: "मैं सोने से कम से कम 8 घंटे पहले कैफीन से बचता हूँ",
+                habitscreensDesc: "स्क्रीन टाइम",
+                habitscreensDetail: "मैं सोने से कम से कम 60 मिनट पहले सभी स्क्रीन (फोन, टीवी, लैपटॉप) दूर रख देता हूँ",
+                habitconsistencyDesc: "संगति",
+                habitconsistencyDetail: "मैं सप्ताहांत पर भी लगभग एक ही समय पर सोता हूँ और उठता हूँ",
+                habitenvironmentDesc: "वातावरण",
+                habitenvironmentDetail: "मेरा शयनकक्ष अंधेरा, शांत और ठंडा है",
+                habitexerciseDesc: "व्यायाम",
+                habitexerciseDetail: "मैं दिन के दौरान नियमित शारीरिक गतिविधि करता हूँ",
+                habitmealsDesc: "देर से भोजन",
+                habitmealsDetail: "मैं सोने के 2-3 घंटे के भीतर भारी भोजन या अतिरिक्त तरल पदार्थ से बचता हूँ",
+                habitwinddownDesc: "शांत होना",
+                habitwinddownDetail: "मेरे पास सोने से पहले एक आरामदायक दिनचर्या है (जैसे, किताब पढ़ना, ध्यान, गर्म स्नान)",
+                psqiTitle: "भाग 2 - नींद की गुणवत्ता का आकलन",
+                psqiSubtitle: "पिट्सबर्ग स्लीप क्वालिटी इंडेक्स (PSQI)",
+                psqiInstructions: "निम्नलिखित प्रश्न केवल पिछले महीने की आपकी सामान्य नींद की आदतों से संबंधित हैं। आपके उत्तर पिछले महीने के अधिकांश दिनों और रातों के लिए सबसे सटीक उत्तर का संकेत देने चाहिए।",
+                epworthTitle: "भाग 3 - दिन में नींद आना",
+                epworthSubtitle: "एपवर्थ स्लीपनेस स्केल",
+                epworthInstructions: "निम्नलिखित स्थितियों में आपके ऊंघने या सो जाने की कितनी संभावना है?<br><br><strong>0</strong> = कभी नहीं ऊंघूंगा | <strong>1</strong> = थोड़ी संभावना | <strong>2</strong> = मध्यम संभावना | <strong>3</strong> = उच्च संभावना",
+                epworthHeader1: "स्थिति",
+                epworthHeader2: "स्कोर (0-3)",
+                epworthTotal: "कुल एपवर्थ स्कोर:",
+                epworthConcern: "10 या उससे अधिक का स्कोर चिंता का विषय है।",
+                stopBangTitle: "भाग 4 - स्लीप एपनिया का खतरा",
+                stopBangSubtitle: "स्टॉप-बैंग प्रश्नावली",
+                stopBangHeader1: "प्रश्न",
+                stopBangHeader2: "उत्तर",
+                stopBangTotal: "कुल 'हाँ' उत्तर:",
+                stopBangRisk: "0-2: कम जोखिम | 3-4: मध्यवर्ती जोखिम | 5-8: उच्च जोखिम",
+                recoTitle: "अपनी नींद को समझना और सिफारिशें",
+                recoSubtitle: "आपके उत्तरों पर आधारित व्यक्तिगत सलाह",
+                resultsTitle: "आपके परिणाम और मुख्य निष्कर्ष",
+                resultsSubtitle: "आपकी नींद के मूल्यांकन का सारांश",
+                summaryTitle: "सारांश और अगले चरण",
+                summarySubtitle: "मेरी संपूर्ण नींद स्वास्थ्य गाइड",
+                congratsTitle: "🎉 अपनी नींद के स्वास्थ्य पर नियंत्रण रखने के लिए बधाई!",
+                congratsSubtitle: "आपने अपनी नींद के पैटर्न और आदतों का एक व्यापक मूल्यांकन पूरा कर लिया है।",
+                downloadBtn: "📄 रिपोर्ट डाउनलोड करें",
+                printBtn: "🖨️ गाइड प्रिंट करें",
+                resetBtn: "🔄 फिर से शुरू करें",
+                prevBtn: "पिछला",
+                nextBtn: "अगला",
+                disclaimer: "<strong>अस्वीकरण:</strong> यह उपकरण केवल सूचना के उद्देश्यों के लिए है और चिकित्सा सलाह का गठन नहीं करता है। परिणाम आपकी नींद के पैटर्न को समझने में मदद करने और एक स्वास्थ्य देखभाल पेशेवर के साथ बातचीत को सुविधाजनक बनाने के लिए हैं। यह पेशेवर निदान या उपचार का विकल्प नहीं है। कृपया किसी भी स्वास्थ्य संबंधी चिंता के लिए एक योग्य चिकित्सक या नींद विशेषज्ञ से परामर्श करें।"
+            }
+        };
+
+        // ================================================
+        // DATA & CONTENT (Continued)
+        // ================================================
+        const habitsData = [
+            { name: 'caffeine', desc: 'Caffeine Timing', detail: 'I avoid caffeine at least 8 hours before bed' },
+            { name: 'screens', desc: 'Screen Time', detail: 'I put away all screens (phone, TV, laptop) at least 60 minutes before bed' },
+            { name: 'consistency', desc: 'Consistency', detail: 'I go to bed and wake up at roughly the same time, even on weekends' },
+            { name: 'environment', desc: 'Environment', detail: 'My bedroom is dark, quiet, and cool' },
+            { name: 'exercise', desc: 'Exercise', detail: 'I get regular physical activity during the day' },
+            { name: 'meals', desc: 'Late Meals', detail: 'I avoid heavy meals or excess fluids within 2-3 hours of bedtime' },
+            { name: 'winddown', desc: 'Wind-Down', detail: 'I have a relaxing pre-sleep routine (e.g., reading, meditation, warm bath)' }
+        ];
+        
+        const epworthData = [
+            'Sitting and reading', 'Watching TV', 'Sitting, inactive, in a public place (e.g., a meeting or theater)',
+            'As a passenger in a car for an hour without a break', 'Lying down to rest in the afternoon when circumstances permit',
+            'Sitting and talking to someone', 'Sitting quietly after a meal without alcohol', 'In a car, while stopped for a few minutes in traffic'
+        ];
+
+        const stopBangData = [
+            { name: 'snoring', question: '<strong>Snoring:</strong> Do you snore loudly (loud enough to be heard through closed doors)?' },
+            { name: 'tired', question: '<strong>Tired:</strong> Do you often feel tired, fatigued, or sleepy during the daytime?' },
+            { name: 'observed', question: '<strong>Observed:</strong> Has anyone observed you stop breathing or choke/gasp during your sleep?' },
+            { name: 'pressure', question: '<strong>Pressure:</strong> Do you have or are you being treated for high blood pressure?' },
+            { name: 'bmi', question: '<strong>BMI:</strong> Is your Body Mass Index (BMI) more than 35 kg/m²?' },
+            { name: 'age', question: '<strong>Age:</strong> Are you older than 50?' },
+            { name: 'neck', question: '<strong>Neck Size:</strong> Is your shirt collar 16 inches / 40cm or larger?' },
+            { name: 'gender', question: '<strong>Gender:</strong> Are you male?' }
+        ];
+
+        // ================================================
+        // HELPER FUNCTIONS
+        // ================================================
+        const getRadioValue = (name) => {
+            const el = document.querySelector(`input[name="${name}"]:checked`);
+            return el ? parseInt(el.value) : 0;
+        };
+
+        // ================================================
+        // INITIALIZATION
+        // ================================================
+        document.addEventListener('DOMContentLoaded', () => {
+            generateDynamicContent();
+            setupEventListeners();
+            setDefaultDate();
+            const savedLang = localStorage.getItem('sleepGuideLanguage') || 'en';
+            setLanguage(savedLang);
+            if (!loadSavedProgress()) {
+                showPage(1);
+            }
+            setInterval(autoSave, 30000); // Auto-save every 30 seconds
+        });
+
+        function setDefaultDate() {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+            const dd = String(today.getDate()).padStart(2, '0');
+            document.getElementById('dateField').value = `${yyyy}-${mm}-${dd}`;
+        }
+
+        // ================================================
+        // DYNAMIC CONTENT GENERATION
+        // ================================================
+        function generateDynamicContent() {
+            generateHabitsTable();
+            generatePSQIPage();
+            generateEpworthTable();
+            generateStopBangTable();
+            generatePageIndicatorDots();
+        }
+
+        function generateHabitsTable() {
+            const habitsBody = document.querySelector('#habitsTable tbody');
+            let html = '';
+            habitsData.forEach(habit => {
+                html += `
+                    <tr>
+                        <td>
+                            <div class="habit-description" data-translate-key="habit${habit.name}Desc"></div>
+                            <div class="habit-detail" data-translate-key="habit${habit.name}Detail"></div>
+                        </td>
+                        ${['often', 'sometimes', 'rarely'].map(freq => `
+                        <td>
+                            <div class="frequency-options">
+                                <label class="frequency-option">
+                                    <input type="radio" name="${habit.name}" value="${freq}">
+                                </label>
+                            </div>
+                        </td>`).join('')}
+                    </tr>`;
+            });
+            habitsBody.innerHTML = html;
+        }
+
+        function generateEpworthTable() {
+            const epworthBody = document.querySelector('#epworthTable tbody');
+            let html = '';
+            epworthData.forEach((question, index) => {
+                html += `
+                    <tr>
+                        <td data-translate-key="epworthQ${index+1}"></td>
+                        <td>
+                            <div class="score-input" data-question-index="${index}">
+                                ${[0, 1, 2, 3].map(score => `<button class="score-button" data-score="${score}">${score}</button>`).join('')}
+                            </div>
+                        </td>
+                    </tr>`;
+            });
+            epworthBody.innerHTML = html;
+        }
+
+        function generateStopBangTable() {
+            const stopBangBody = document.querySelector('#stopBangTable tbody');
+            let html = '';
+            stopBangData.forEach((item, index) => {
+                html += `
+                    <tr>
+                        <td data-translate-key="stopBangQ${index+1}"></td>
+                        <td>
+                            <div class="frequency-options" style="justify-content: center;">
+                                <label class="frequency-option"><input type="radio" name="${item.name}" value="yes"> <span data-translate-key="yes">Yes</span></label>
+                                <label class="frequency-option"><input type="radio" name="${item.name}" value="no"> <span data-translate-key="no">No</span></label>
+                            </div>
+                        </td>
+                    </tr>`;
+            });
+            stopBangBody.innerHTML = html;
+        }
+
+        function generatePageIndicatorDots() {
+             const indicatorContainer = document.getElementById('pageIndicator');
+            for (let i = 0; i < state.totalPages; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                indicatorContainer.appendChild(dot);
+            }
+        }
+
+        function generateTimeOptions(startHour, endHour, selectedHour, selectedMinute) {
+            let options = '';
+            for (let h = startHour; h < startHour + 24; h++) { 
+                const currentHour = h % 24;
+                for (let m = 0; m < 60; m += 30) {
+                    const displayHour = currentHour === 0 ? 12 : (currentHour > 12 ? currentHour - 12 : currentHour);
+                    const ampm = currentHour < 12 ? 'AM' : 'PM';
+                    const timeValue = `${String(currentHour).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+                    const timeLabel = `${displayHour}:${String(m).padStart(2, '0')} ${ampm}`;
+                    
+                    const isSelected = currentHour === selectedHour && m === selectedMinute;
+                    options += `<option value="${timeValue}" ${isSelected ? 'selected' : ''}>${timeLabel}</option>`;
+                }
+                if (currentHour === endHour) break;
+            }
+            return options;
+        }
+
+        function generatePSQIPage() {
+            const container = document.getElementById('psqiContainer');
+            const bedtimeOptions = generateTimeOptions(18, 5, 20, 0); // 6 PM to 5 AM, default 8 PM
+            const wakeOptions = generateTimeOptions(3, 12, 6, 0); // 3 AM to 12 PM, default 6 AM
+            
+            container.innerHTML = `
+                <div class="psqi-question">
+                    <h3 data-translate-key="psqiQ1">1. During the past month, what time have you usually gone to bed at night?</h3>
+                    <select id="psqi-bedtime" name="psqi-bedtime" style="margin-top: 10px; width: 180px;">${bedtimeOptions}</select>
+                </div>
+                <div class="psqi-question">
+                    <h3 data-translate-key="psqiQ2">2. During the past month, how long (in minutes) has it usually taken you to fall asleep each night?</h3>
+                    <input type="number" id="psqi-sleep-latency" name="psqi-sleep-latency" placeholder="Minutes" style="margin-top: 10px; width: 180px;">
+                </div>
+                <div class="psqi-question">
+                    <h3 data-translate-key="psqiQ3">3. During the past month, what time have you usually gotten up in the morning?</h3>
+                    <select id="psqi-wake-time" name="psqi-wake-time" style="margin-top: 10px; width: 180px;">${wakeOptions}</select>
+                </div>
+                <div class="psqi-question">
+                    <h3 data-translate-key="psqiQ4">4. During the past month, how many hours of actual sleep did you get at night?</h3>
+                    <input type="number" id="psqi-sleep-duration" name="psqi-sleep-duration" placeholder="Hours (e.g., 7.5)" style="margin-top: 10px; width: 180px;">
+                </div>
+                <!-- Group 5 questions will be added by setLanguage -->
+                <div id="psqi-group-5"></div>
+                <!-- Other questions will be added by setLanguage -->
+                <div id="psqi-q6"></div>
+                <div id="psqi-q7"></div>
+                <div id="psqi-q8"></div>
+                <div id="psqi-q9"></div>
+            `;
+        }
+
+
+        // ================================================
+        // EVENT LISTENERS SETUP
+        // ================================================
+        function setupEventListeners() {
+            document.getElementById('startBtn').addEventListener('click', nextPage);
+            document.getElementById('prevBtn').addEventListener('click', prevPage);
+            document.getElementById('nextBtn').addEventListener('click', nextPage);
+            document.getElementById('downloadBtn').addEventListener('click', downloadReport);
+            document.getElementById('printBtn').addEventListener('click', () => window.print());
+            document.getElementById('resetBtn').addEventListener('click', resetGuide);
+
+            document.querySelector('.language-selector').addEventListener('click', (e) => {
+                if(e.target.classList.contains('lang-btn')) {
+                    setLanguage(e.target.dataset.lang);
+                }
+            });
+
+            document.getElementById('epworthTable').addEventListener('click', e => {
+                if (e.target.classList.contains('score-button')) {
+                    const questionIndex = parseInt(e.target.parentElement.dataset.questionIndex);
+                    const score = parseInt(e.target.dataset.score);
+                    selectEpworthScore(e.target, questionIndex, score);
+                }
+            });
+
+            document.getElementById('stopBangTable').addEventListener('change', updateStopBangTotal);
+
+            let saveTimeout;
+            document.querySelector('.container').addEventListener('input', () => {
+                clearTimeout(saveTimeout);
+                saveTimeout = setTimeout(autoSave, 1500);
+            });
+        }
+
+        // ================================================
+        // NAVIGATION LOGIC
+        // ================================================
+        function showPage(pageNum) {
+            state.currentPage = pageNum;
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            const newPage = document.getElementById(`page${pageNum}`);
+            if (newPage) newPage.classList.add('active');
+
+            let pageNumberDiv = newPage.querySelector('.page-number');
+            if (pageNum > 1) {
+                if (!pageNumberDiv) {
+                    pageNumberDiv = document.createElement('div');
+                    pageNumberDiv.className = 'page-number';
+                    newPage.prepend(pageNumberDiv);
+                }
+                pageNumberDiv.textContent = `${pageNum} / ${state.totalPages}`;
+            }
+
+            const navContainer = document.getElementById('navigationContainer');
+            if (pageNum > 1) {
+                newPage.appendChild(navContainer);
+                navContainer.style.display = 'flex';
+            } else {
+                navContainer.style.display = 'none';
+            }
+
+            updateNavigationButtons();
+            updatePageIndicator();
+            updateProgressIndicator();
+            
+            if (pageNum === 7) updateRecommendationsPage();
+            if (pageNum === 8) updateActionPlan();
+            if (pageNum === 9) updateSummary();
+        }
+
+        function nextPage() {
+            if (state.currentPage < state.totalPages) {
+                showPage(state.currentPage + 1);
+                autoSave();
+            }
+        }
+
+        function prevPage() {
+            if (state.currentPage > 1) {
+                showPage(state.currentPage - 1);
+                autoSave();
+            }
+        }
+
+        function updateNavigationButtons() {
+            document.getElementById('prevBtn').disabled = state.currentPage === 1;
+            document.getElementById('nextBtn').disabled = state.currentPage === state.totalPages;
+            document.getElementById('nextBtn').textContent = state.currentPage === state.totalPages -1 ? 'See Results' : 'Next';
+        }
+
+        function updatePageIndicator() {
+            document.querySelectorAll('.dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === state.currentPage - 1);
+            });
+        }
+
+        function updateProgressIndicator() {
+            const progressPercent = Math.round((state.currentPage / state.totalPages) * 100);
+            const progressFill = document.getElementById('progressFill');
+            progressFill.style.width = progressPercent + '%';
+            progressFill.textContent = progressPercent + '% Complete';
+        }
+
+        // ================================================
+        // FORM INTERACTION & CALCULATION LOGIC
+        // ================================================
+        function selectEpworthScore(button, questionIndex, score) {
+            state.epworthScores[questionIndex] = score;
+            const row = button.closest('tr');
+            row.querySelectorAll('.score-button').forEach(btn => btn.classList.remove('selected'));
+            button.classList.add('selected');
+            updateEpworthTotal();
+        }
+
+        function updateEpworthTotal() {
+            const total = state.epworthScores.reduce((sum, score) => sum + (score || 0), 0);
+            document.getElementById('epworthTotal').value = total;
+        }
+
+        function updateStopBangTotal() {
+            const yesCount = stopBangData.reduce((count, item) => {
+                const answer = document.querySelector(`input[name="${item.name}"]:checked`);
+                return count + (answer && answer.value === 'yes' ? 1 : 0);
+            }, 0);
+            document.getElementById('stopBangTotal').value = yesCount;
+        }
+
+        function calculatePSQIScore() {
+            const component1 = getRadioValue('psqi-9');
+            
+            const sleepLatencyMins = parseInt(document.getElementById('psqi-sleep-latency').value) || 0;
+            let q2score = 0;
+            if (sleepLatencyMins > 60) q2score = 3;
+            else if (sleepLatencyMins > 30) q2score = 2;
+            else if (sleepLatencyMins > 15) q2score = 1;
+            const q5aScore = getRadioValue('psqi-5a');
+            const sum2 = q2score + q5aScore;
+            let component2 = 0;
+            if (sum2 >= 5) component2 = 3;
+            else if (sum2 >= 3) component2 = 2;
+            else if (sum2 >= 1) component2 = 1;
+            
+            const sleepDurationHours = parseFloat(document.getElementById('psqi-sleep-duration').value) || 0;
+            let component3 = 0;
+            if (sleepDurationHours < 5) component3 = 3;
+            else if (sleepDurationHours < 6) component3 = 2;
+            else if (sleepDurationHours < 7) component3 = 1;
+
+            const bedtime = document.getElementById('psqi-bedtime').value;
+            const wakeTime = document.getElementById('psqi-wake-time').value;
+            let component4 = 0;
+            if (bedtime && wakeTime && sleepDurationHours > 0) {
+                const bedDate = new Date(`1970-01-01T${bedtime}`);
+                let wakeDate = new Date(`1970-01-01T${wakeTime}`);
+                if (wakeDate <= bedDate) {
+                    wakeDate.setDate(wakeDate.getDate() + 1);
+                }
+                const hoursInBed = (wakeDate - bedDate) / (1000 * 60 * 60);
+                if (hoursInBed > 0) {
+                    const efficiency = (sleepDurationHours / hoursInBed) * 100;
+                    if (efficiency < 65) component4 = 3;
+                    else if (efficiency < 75) component4 = 2;
+                    else if (efficiency < 85) component4 = 1;
+                }
+            }
+
+            const disturbanceNames = ['psqi-5b', 'psqi-5c', 'psqi-5d', 'psqi-5e', 'psqi-5f', 'psqi-5g', 'psqi-5h', 'psqi-5i', 'psqi-5j'];
+            const disturbanceSum = disturbanceNames.reduce((sum, name) => sum + getRadioValue(name), 0);
+            let component5 = 0;
+            if (disturbanceSum >= 19) component5 = 3;
+            else if (disturbanceSum >= 10) component5 = 2;
+            else if (disturbanceSum >= 1) component5 = 1;
+
+            const component6 = getRadioValue('psqi-6');
+
+            const sum7 = getRadioValue('psqi-7') + getRadioValue('psqi-8');
+            let component7 = 0;
+            if (sum7 >= 5) component7 = 3;
+            else if (sum7 >= 3) component7 = 2;
+            else if (sum7 >= 1) component7 = 1;
+
+            return component1 + component2 + component3 + component4 + component5 + component6 + component7;
+        }
+
+        // ================================================
+        // RESULTS & SUMMARY PAGES LOGIC
+        // ================================================
+        function updateRecommendationsPage() {
+            const container = document.getElementById('recommendationsContainer');
+            let html = '';
+
+            const duration = document.getElementById('snapshot-duration').value;
+            const regularity = document.getElementById('snapshot-regularity').value;
+            const feeling = document.getElementById('snapshot-feeling').value;
+            const latency = parseInt(document.getElementById('psqi-sleep-latency').value) || 0;
+            const q5b = getRadioValue('psqi-5b');
+
+            if (duration === 'less-than-5' || duration === '5-6') {
+                html += `
+                    <div class="recommendation-block">
+                        <div class="recommendation-title">Insufficient Sleep Duration (Sleep Deprivation)</div>
+                        <div class="recommendation-body">
+                            <p>You indicated that you are consistently not allocating enough time for sleep. This can lead to accumulated effects and feeling sleepy the next day.</p>
+                            <ul>
+                                <li><strong>Recommendation:</strong> Actively give yourself enough time to sleep each night. Aim for a consistent sleep window of 7-9 hours, for example, 10:00 PM to 6:00 AM.</li>
+                            </ul>
+                        </div>
+                    </div>`;
+            }
+            if (regularity === 'inconsistent') {
+                 html += `
+                    <div class="recommendation-block">
+                        <div class="recommendation-title">Irregular Sleep Schedule</div>
+                        <div class="recommendation-body">
+                            <p>Varying your sleep times between weekdays and weekends can disrupt your body's internal clock and result in sleep deprivation. Regularity is crucial.</p>
+                            <ul>
+                                <li><strong>Recommendation:</strong> Strive to go to bed and wake up at the same time every single day, including weekends, to enhance sleep regularity.</li>
+                            </ul>
+                        </div>
+                    </div>`;
+            }
+             if (latency > 30) {
+                 html += `
+                    <div class="recommendation-block">
+                        <div class="recommendation-title">Difficulty Falling Asleep (Initial Insomnia)</div>
+                        <div class="recommendation-body">
+                            <p>If you lie in bed trying to sleep but find yourself tossing and turning for more than 30 minutes before falling asleep, this indicates a problem.</p>
+                            <ul>
+                                <li><strong>Recommendation:</strong> If you are consistently taking more than 30 minutes to fall asleep, recognize this as a problem that needs to be addressed through better sleep hygiene or consultation with a doctor.</li>
+                            </ul>
+                        </div>
+                    </div>`;
+            }
+            if (q5b > 1) { // Corresponds to "Once or twice a week" or more
+                 html += `
+                    <div class="recommendation-block">
+                        <div class="recommendation-title">Frequent Night Awakenings</div>
+                        <div class="recommendation-body">
+                            <p>Waking up repeatedly during the night, such that the total time you are awake adds up to approximately 30 minutes or more, is another sign of poor sleep.</p>
+                            <ul>
+                                <li><strong>Recommendation:</strong> If frequent awakenings disrupt your sleep, focus on strategies to achieve more consolidated sleep, such as ensuring your bedroom is dark and quiet.</li>
+                            </ul>
+                        </div>
+                    </div>`;
+            }
+            if (feeling === 'groggy') {
+                 html += `
+                    <div class="recommendation-block">
+                        <div class="recommendation-title">Lack of Morning Freshness or Alertness</div>
+                        <div class="recommendation-body">
+                            <p>Waking up in the morning and not feeling fresh or alert suggests that the quality of your sleep was not good.</p>
+                            <ul>
+                                <li><strong>Recommendation:</strong> If you wake up not feeling fresh, investigate potential issues such as snoring, restless movements, or the lack of deep, restorative sleep.</li>
+                            </ul>
+                        </div>
+                    </div>`;
+            }
+
+            if (html === '') {
+                html = `<div class="instructions">Based on your initial answers, you don't seem to have major sleep issues. Continue through the guide for a more detailed analysis.</div>`;
+            }
+
+            container.innerHTML = html;
+        }
+
+        function updateActionPlan() {
+            const psqiScore = calculatePSQIScore();
+            const epworthScore = state.epworthScores.reduce((s, v) => s + (v || 0), 0);
+            const stopBangScore = document.getElementById('stopBangTotal').value;
+            
+            const container = document.getElementById('actionPlanContainer');
+            container.innerHTML = `
+                <div class="action-module">
+                    <h3 class="module-title" data-translate-key="keyFindings">Key Findings</h3>
+                    <div class="score-display"><span>PSQI Score:</span><div class="score-box">${psqiScore}</div><span data-translate-key="psqiFinding">(Score > 5 suggests poor sleep quality)</span></div>
+                    <div class="score-display"><span>Epworth Score:</span><div class="score-box">${epworthScore}</div><span data-translate-key="epworthFinding">(Score ≥ 10 suggests excessive sleepiness)</span></div>
+                    <div class="score-display"><span>STOP-Bang Score:</span><div class="score-box">${stopBangScore}</div><span data-translate-key="stopBangFinding">(Score ≥ 3 suggests increased OSA risk)</span></div>
+                </div>`;
+        }
+
+        function updateSummary() {
+            const container = document.getElementById('summaryContainer');
+            container.innerHTML = `
+                <div class="action-module">
+                    <h3 class="module-title" data-translate-key="summaryRef">Quick Reference Summary</h3>
+                    <p data-translate-key="summaryText">This final page provides a summary of all your results and offers next steps.</p>
+                </div>`;
+        }
+
+        // ================================================
+        // SAVE, LOAD, & RESET LOGIC
+        // ================================================
+        function gatherAllFormData() {
+            const data = {};
+            document.querySelectorAll('input, textarea, select').forEach(input => {
+                const key = input.id || input.name;
+                if (!key) return;
+
+                if (input.type === 'radio') {
+                    if (input.checked) data[key] = input.value;
+                } else if (input.type === 'checkbox') {
+                    if (!data[key]) data[key] = [];
+                    if (input.checked) data[key].push(input.value);
+                } else {
+                    data[key] = input.value;
+                }
+            });
+            return data;
+        }
+
+        function autoSave() {
+            state.formData = gatherAllFormData();
+            localStorage.setItem('sleepAssessmentProgress', JSON.stringify(state));
+            state.lastSaveTime = new Date();
+            updateSaveIndicator();
+        }
+
+        function loadSavedProgress() {
+            const saved = localStorage.getItem('sleepAssessmentProgress');
+            if (!saved) return false;
+
+            try {
+                const data = JSON.parse(saved);
+                const savedDate = new Date(data.lastSaveTime);
+                if ((new Date() - savedDate) / (1000 * 60 * 60 * 24) > 7) {
+                     localStorage.removeItem('sleepAssessmentProgress');
+                     return false;
+                }
+                
+                if (confirm(`Found saved progress from ${savedDate.toLocaleString()}. Continue?`)) {
+                    Object.assign(state, data);
+                    restoreFormData(state.formData);
+                    setLanguage(state.currentLanguage);
+                    showPage(state.currentPage);
+                    return true;
+                } else {
+                    localStorage.removeItem('sleepAssessmentProgress');
+                }
+            } catch (e) {
+                console.error("Error loading saved progress:", e);
+                return false;
+            }
+        }
+
+        function restoreFormData(data) {
+            if (!data) return;
+            Object.keys(data).forEach(key => {
+                const elements = document.querySelectorAll(`[name="${key}"]`);
+                if (elements.length === 0) {
+                    const el = document.getElementById(key);
+                    if (el) el.value = data[key];
+                    return;
+                }
+
+                if (elements[0].type === 'radio') {
+                    const el = document.querySelector(`[name="${key}"][value="${data[key]}"]`);
+                    if (el) el.checked = true;
+                } else if (elements[0].type === 'checkbox') {
+                    data[key].forEach(value => {
+                        const el = document.querySelector(`[name="${key}"][value="${value}"]`);
+                        if (el) el.checked = true;
+                    });
+                }
+            });
+
+            if (state.epworthScores) {
+                state.epworthScores.forEach((score, index) => {
+                    if (score !== null) {
+                        const button = document.querySelector(`.score-input[data-question-index="${index}"] .score-button[data-score="${score}"]`);
+                        if(button) selectEpworthScore(button, index, score);
+                    }
+                });
+            }
+            updateStopBangTotal();
+        }
+
+        function updateSaveIndicator() {
+            const indicator = document.getElementById('saveIndicator');
+            if (state.lastSaveTime) {
+                indicator.textContent = `✓ Saved ${state.lastSaveTime.toLocaleTimeString()}`;
+                indicator.classList.add('show');
+                setTimeout(() => indicator.classList.remove('show'), 2000);
+            }
+        }
+
+        function resetGuide() {
+            if (confirm('Are you sure you want to start over? All your answers will be lost.')) {
+                localStorage.removeItem('sleepAssessmentProgress');
+                window.location.reload();
+            }
+        }
+
+        function downloadReport() {
+            const downloadBtn = document.getElementById('downloadBtn');
+            downloadBtn.disabled = true;
+            downloadBtn.textContent = '📄 Generating...';
+
+            const userName = document.getElementById('userName').value || 'Patient';
+            const reportDate = new Date().toLocaleDateString('hi-IN');
+            
+            const psqiScore = calculatePSQIScore();
+            const epworthScore = state.epworthScores.reduce((s, v) => s + (v || 0), 0);
+            const stopBangScore = document.getElementById('stopBangTotal').value;
+
+            // Generate recommendations in Hindi
+            let recommendationsHtml = '';
+            const duration = document.getElementById('snapshot-duration').value;
+            const regularity = document.getElementById('snapshot-regularity').value;
+            const feeling = document.getElementById('snapshot-feeling').value;
+            const latency = parseInt(document.getElementById('psqi-sleep-latency').value) || 0;
+            const q5b = getRadioValue('psqi-5b');
+
+            if (duration === 'less-than-5' || duration === '5-6') {
+                recommendationsHtml += `
+                    <div class="recommendation-block">
+                        <div class="recommendation-title">अपर्याप्त नींद की अवधि (नींद की कमी)</div>
+                        <div class="recommendation-body">
+                            <p>आपने संकेत दिया है कि आप लगातार नींद के लिए पर्याप्त समय नहीं दे रहे हैं। इससे संचित प्रभाव हो सकते हैं और अगले दिन नींद महसूस हो सकती है।</p>
+                            <p><strong>सिफारिश:</strong> हर रात सोने के लिए सक्रिय रूप से पर्याप्त समय दें। 7-9 घंटे की नींद का लक्ष्य रखें, उदाहरण के लिए, रात 10:00 बजे से सुबह 6:00 बजे तक।</p>
+                        </div>
+                    </div>`;
+            }
+            if (regularity === 'inconsistent') {
+                 recommendationsHtml += `
+                    <div class="recommendation-block">
+                        <div class="recommendation-title">अनियमित नींद का शेड्यूल</div>
+                        <div class="recommendation-body">
+                            <p>सप्ताहांत और कार्यदिवसों के बीच आपके सोने के समय में भिन्नता आपके शरीर की आंतरिक घड़ी को बाधित कर सकती है और नींद की कमी का कारण बन सकती है। नियमितता महत्वपूर्ण है।</p>
+                            <p><strong>सिफारिश:</strong> नींद की नियमितता बढ़ाने के लिए सप्ताहांत सहित हर दिन एक ही समय पर सोने और जागने का प्रयास करें।</p>
+                        </div>
+                    </div>`;
+            }
+             if (latency > 30) {
+                 recommendationsHtml += `
+                    <div class="recommendation-block">
+                        <div class="recommendation-title">सोने में कठिनाई (प्रारंभिक अनिद्रा)</div>
+                        <div class="recommendation-body">
+                            <p>यदि आप बिस्तर पर सोने की कोशिश करते हैं लेकिन सोने से पहले 30 मिनट से अधिक समय तक करवटें बदलते रहते हैं, तो यह एक समस्या का संकेत है।</p>
+                            <p><strong>सिफारिश:</strong> यदि आपको लगातार सोने में 30 मिनट से अधिक समय लग रहा है, तो इसे एक ऐसी समस्या के रूप में पहचानें जिसे बेहतर नींद स्वच्छता या डॉक्टर से परामर्श के माध्यम से संबोधित करने की आवश्यकता है।</p>
+                        </div>
+                    </div>`;
+            }
+            if (q5b > 1) {
+                 recommendationsHtml += `
+                    <div class="recommendation-block">
+                        <div class="recommendation-title">रात में बार-बार जागना</div>
+                        <div class="recommendation-body">
+                            <p>रात के दौरान बार-बार जागना, जिससे आपके जागने का कुल समय लगभग 30 मिनट या उससे अधिक हो जाता है, खराब नींद का एक और संकेत है।</p>
+                            <p><strong>सिफारिश:</strong> यदि बार-बार जागना आपकी नींद को बाधित करता है, तो अधिक समेकित नींद प्राप्त करने के लिए रणनीतियों पर ध्यान केंद्रित करें, जैसे कि यह सुनिश्चित करना कि आपका शयनकक्ष अंधेरा और शांत हो।</p>
+                        </div>
+                    </div>`;
+            }
+            if (feeling === 'groggy') {
+                 recommendationsHtml += `
+                    <div class="recommendation-block">
+                        <div class="recommendation-title">सुबह ताजगी या सतर्कता की कमी</div>
+                        <div class="recommendation-body">
+                            <p>सुबह उठने पर ताजा या सतर्क महसूस न करना यह बताता है कि आपकी नींद की गुणवत्ता अच्छी नहीं थी।</p>
+                            <p><strong>सिफारिश:</strong> यदि आप ताजा महसूस नहीं करते हैं, तो संभावित मुद्दों जैसे खर्राटे, बेचैन हरकतें, या गहरी, पुनर्स्थापनात्मक नींद की कमी की जांच करें।</p>
+                        </div>
+                    </div>`;
+            }
+            if (recommendationsHtml === '') {
+                recommendationsHtml = `<p>आपके उत्तरों के आधार पर, कोई विशिष्ट समस्या की पहचान नहीं हुई है। अच्छी नींद की आदतें बनाए रखना जारी रखें।</p>`;
+            }
+
+            const reportHtml = `
+                <html>
+                    <head>
+                        <meta charset="UTF-8">
+                        <style>
+                            body { font-family: 'Poppins', sans-serif; margin: 20px; color: #333; }
+                            .header { text-align: center; border-bottom: 2px solid #0ea5e9; padding-bottom: 15px; margin-bottom: 20px; }
+                            .header h1 { color: #0ea5e9; margin: 0; font-size: 24px; }
+                            .header p { margin: 5px 0 0; font-size: 16px; }
+                            .section { margin-bottom: 20px; }
+                            .section h2 { font-size: 20px; color: #0ea5e9; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 10px;}
+                            .score-display { display: flex; align-items: center; gap: 15px; margin: 15px 0; font-size: 16px; }
+                            .score-box { background: #0ea5e9; color: white; border-radius: 8px; padding: 10px 15px; font-size: 20px; font-weight: bold; min-width: 50px; text-align: center;}
+                            .recommendation-block { border: 1px solid #ddd; border-radius: 8px; margin: 15px 0; }
+                            .recommendation-title { font-size: 16px; font-weight: bold; padding: 10px; background: #f3e8ff; color: #8b5cf6; border-bottom: 1px solid #ddd; }
+                            .recommendation-body { padding: 10px; }
+                            .disclaimer { font-size: 10px; color: #666; text-align: center; margin-top: 30px; padding-top: 10px; border-top: 1px solid #ccc; }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="header">
+                            <h1>मेरी संपूर्ण नींद स्वास्थ्य गाइड</h1>
+                            <p>अपनी नींद को ट्रैक करें, समझें और सुधारें</p>
+                            <p><b>रोगी का नाम:</b> ${userName}</p>
+                            <p><b>रिपोर्ट की तारीख:</b> ${reportDate}</p>
+                        </div>
+
+                        <div class="section">
+                            <h2>आपके परिणाम और मुख्य निष्कर्ष</h2>
+                            <div class="score-display"><span>PSQI स्कोर:</span><div class="score-box">${psqiScore}</div><span>(स्कोर > 5 खराब नींद की गुणवत्ता का सुझाव देता है)</span></div>
+                            <div class="score-display"><span>एपवर्थ स्कोर:</span><div class="score-box">${epworthScore}</div><span>(स्कोर ≥ 10 अत्यधिक नींद का सुझाव देता है)</span></div>
+                            <div class="score-display"><span>स्टॉप-बैंग स्कोर:</span><div class="score-box">${stopBangScore}</div><span>(स्कोर ≥ 3 OSA के बढ़ते जोखिम का सुझाव देता है)</span></div>
+                        </div>
+
+                        <div class="section">
+                            <h2>सिफारिशें</h2>
+                            ${recommendationsHtml}
+                        </div>
+                        
+                        <div class="disclaimer">
+                            <strong>अस्वीकरण:</strong> यह उपकरण केवल सूचना के उद्देश्यों के लिए है और चिकित्सा सलाह का गठन नहीं करता है। परिणाम आपकी नींद के पैटर्न को समझने में मदद करने और एक स्वास्थ्य देखभाल पेशेवर के साथ बातचीत को सुविधाजनक बनाने के लिए हैं। यह पेशेवर निदान या उपचार का विकल्प नहीं है। कृपया किसी भी स्वास्थ्य संबंधी चिंता के लिए एक योग्य चिकित्सक या नींद विशेषज्ञ से परामर्श करें।
+                        </div>
+                    </body>
+                </html>
+            `;
+
+            const opt = {
+                margin:       10,
+                filename:     `Sleep_Health_Report_${userName.replace(/\s+/g, '_')}.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().from(reportHtml).set(opt).save().then(() => {
+                downloadBtn.disabled = false;
+                downloadBtn.textContent = '📄 Download Report';
+                setLanguage(state.currentLanguage); // Re-translate button after download
+            });
+        }
+        
+        // ================================================
+        // LANGUAGE SWITCHING LOGIC
+        // ================================================
+        function setLanguage(lang) {
+            state.currentLanguage = lang;
+            localStorage.setItem('sleepGuideLanguage', lang);
+
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+
+            const langStrings = translations[lang];
+
+            document.querySelectorAll('[data-translate-key]').forEach(el => {
+                const key = el.dataset.translateKey;
+                if (langStrings[key]) {
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = langStrings[key];
+                    } else {
+                        el.innerHTML = langStrings[key];
+                    }
+                }
+            });
+             // Manually update dynamic content that needs translation
+            updateDynamicText(lang);
+        }
+
+        function updateDynamicText(lang) {
+            const langStrings = translations[lang];
+            // This function would be expanded for more complex dynamic text
+        }
+
+    })();
+    </script>
+</body>
+</html>
