@@ -1228,6 +1228,36 @@
         };
 
         // ================================================
+        // DATA & CONTENT (Continued)
+        // ================================================
+        const habitsData = [
+            { name: 'caffeine', desc: 'Caffeine Timing', detail: 'I avoid caffeine at least 8 hours before bed' },
+            { name: 'screens', desc: 'Screen Time', detail: 'I put away all screens (phone, TV, laptop) at least 60 minutes before bed' },
+            { name: 'consistency', desc: 'Consistency', detail: 'I go to bed and wake up at roughly the same time, even on weekends' },
+            { name: 'environment', desc: 'Environment', detail: 'My bedroom is dark, quiet, and cool' },
+            { name: 'exercise', desc: 'Exercise', detail: 'I get regular physical activity during the day' },
+            { name: 'meals', desc: 'Late Meals', detail: 'I avoid heavy meals or excess fluids within 2-3 hours of bedtime' },
+            { name: 'winddown', desc: 'Wind-Down', detail: 'I have a relaxing pre-sleep routine (e.g., reading, meditation, warm bath)' }
+        ];
+        
+        const epworthData = [
+            'Sitting and reading', 'Watching TV', 'Sitting, inactive, in a public place (e.g., a meeting or theater)',
+            'As a passenger in a car for an hour without a break', 'Lying down to rest in the afternoon when circumstances permit',
+            'Sitting and talking to someone', 'Sitting quietly after a meal without alcohol', 'In a car, while stopped for a few minutes in traffic'
+        ];
+
+        const stopBangData = [
+            { name: 'snoring', question: '<strong>Snoring:</strong> Do you snore loudly (loud enough to be heard through closed doors)?' },
+            { name: 'tired', question: '<strong>Tired:</strong> Do you often feel tired, fatigued, or sleepy during the daytime?' },
+            { name: 'observed', question: '<strong>Observed:</strong> Has anyone observed you stop breathing or choke/gasp during your sleep?' },
+            { name: 'pressure', question: '<strong>Pressure:</strong> Do you have or are you being treated for high blood pressure?' },
+            { name: 'bmi', question: '<strong>BMI:</strong> Is your Body Mass Index (BMI) more than 35 kg/m²?' },
+            { name: 'age', question: '<strong>Age:</strong> Are you older than 50?' },
+            { name: 'neck', question: '<strong>Neck Size:</strong> Is your shirt collar 16 inches / 40cm or larger?' },
+            { name: 'gender', question: '<strong>Gender:</strong> Are you male?' }
+        ];
+
+        // ================================================
         // HELPER FUNCTIONS
         // ================================================
         const getRadioValue = (name) => {
